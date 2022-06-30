@@ -10,6 +10,7 @@ const routes = (handler) => [
         allow: 'multipart/form-data',
         multipart: true,
         output: 'stream',
+        maxBytes: 5242880,
       },
       auth: 'unusedapp_jwt',
     },
