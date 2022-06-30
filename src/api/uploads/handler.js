@@ -21,8 +21,8 @@ class UploadsHandler {
   async postUploadUserImageHandler(request, h) {
     try {
       const { data } = request.payload;
-      const filename = await this._storageService.writeFileLocal(data, data.hapi);
-      const fileLocation = `http://${process.env.HOST}:${process.env.PORT}/upload/images/${filename}`;
+      const fileLocation = await this._storageService.writeFile(data, data.hapi);
+      // const fileLocation = `http://${process.env.HOST}:${process.env.PORT}/upload/images/${filename}`;
 
       const response = h.response({
         status: 'success',
@@ -55,8 +55,8 @@ class UploadsHandler {
       const { id: credentialId } = request.auth.credentials;
       const { data } = request.payload;
 
-      const filename = await this._storageService.writeFileLocal(data, data.hapi);
-      const fileLocation = `http://${process.env.HOST}:${process.env.PORT}/upload/images/${filename}`;
+      const fileLocation = await this._storageService.writeFile(data, data.hapi);
+      // const fileLocation = `http://${process.env.HOST}:${process.env.PORT}/upload/images/${filename}`;
       const imageId = await this._uploadsService.addItemPhoto(fileLocation, credentialId, id);
       const response = h.response({
         status: 'success',
@@ -89,10 +89,10 @@ class UploadsHandler {
   async postUploadRewardImageHandler(request, h) {
     try {
       const { data } = request.payload;
-      const filename = await this._storageService.writeFileLocal(data, data.hapi);
-      const fileLocation = `http://${process.env.HOST}:${process.env.PORT}/upload/images/${filename}`;
+      // const filename = await this._storageService.writeFileLocal(data, data.hapi);
+      // const fileLocation = `http://${process.env.HOST}:${process.env.PORT}/upload/images/${filename}`;
 
-      // const fileLocation = await this._storageService.writeFile(data, data.hapi);
+      const fileLocation = await this._storageService.writeFile(data, data.hapi);
       return h.response({
         status: 'success',
         data: {
@@ -127,8 +127,8 @@ class UploadsHandler {
 
       await this._requestsService.checkReceiver(credentialId, id);
 
-      const filename = await this._storageService.writeFileLocal(data, data.hapi);
-      const fileLocation = `http://${process.env.HOST}:${process.env.PORT}/upload/images/${filename}`;
+      const fileLocation = await this._storageService.writeFile(data, data.hapi);
+      // const fileLocation = `http://${process.env.HOST}:${process.env.PORT}/upload/images/${filename}`;
       const imageId = await this._uploadsService.addUlasanPhoto(fileLocation, id);
       return h.response({
         status: 'success',
