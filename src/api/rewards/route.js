@@ -19,6 +19,11 @@ const routes = (handler) => [
   },
   {
     method: 'GET',
+    path: '/reward/admin/{id}',
+    handler: handler.getRewardByIdAdminHandler,
+  },
+  {
+    method: 'GET',
     path: '/myrewards',
     handler: handler.getMyRewardsHandler,
     options: {

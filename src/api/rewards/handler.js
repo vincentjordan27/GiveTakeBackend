@@ -15,6 +15,7 @@ class RewardsHandler {
     this.getRewardRequestHandler = this.getRewardRequestHandler.bind(this);
     this.postFinishRewardRequest = this.postFinishRewardRequest.bind(this);
     this.deleteRewardHandler = this.deleteRewardHandler.bind(this);
+    this.getRewardByIdAdminHandler = this.getRewardByIdAdminHandler.bind(this);
   }
 
   async postFinishRewardRequest(request, h) {
@@ -119,6 +120,35 @@ class RewardsHandler {
         data,
         valid,
         point,
+      });
+    } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+
+      const response = h.response({
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami.',
+      });
+      response.code(500);
+      console.error(error);
+      return response;
+    }
+  }
+
+  async getRewardByIdAdminHandler(request, h) {
+    try {
+      const { id } = request.params;
+      const data = await this._rewardsService.getRewardByIdAdmin(id);
+
+      return h.response({
+        status: 'success',
+        data,
       });
     } catch (error) {
       if (error instanceof ClientError) {

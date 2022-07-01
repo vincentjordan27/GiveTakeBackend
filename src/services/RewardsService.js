@@ -66,6 +66,21 @@ class RewardsService {
     return { data: result.rows[0], valid: total.rows[0].total > 0, point: resultPoint.rows[0].point };
   }
 
+  async getRewardByIdAdmin(id) {
+    const query = {
+      text: 'SELECT * FROM rewards WHERE id =  $1',
+      values: [id],
+    };
+
+    const result = await this._pool.query(query);
+
+    if (!result.rows.length) {
+      throw new NotFoundError('Reward tidak ditemukan');
+    }
+
+    return result.rows[0];
+  }
+
   async getMyReward(id) {
     const query = {
       text: `SELECT user_reward.id, rewards.name, user_reward.date, rewards.photo, user_reward.status FROM user_reward
